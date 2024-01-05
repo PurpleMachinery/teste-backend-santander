@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -102,8 +103,8 @@ public class TransacoesServiceTest {
 
     @Test
     public void deveListarTransacoes() {
-        transacoesService.listarTransacoes();
+        transacoesService.listarTransacoes(LocalDate.parse("2024-01-05"));
 
-        verify(historicoTransacaoRepository, times(1)).findAll();
+        verify(historicoTransacaoRepository, times(1)).findAllByDataMovimentacao(any());
     }
 }

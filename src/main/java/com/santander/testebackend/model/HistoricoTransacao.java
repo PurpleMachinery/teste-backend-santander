@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,7 +16,7 @@ public class HistoricoTransacao extends Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDateTime dataHoraMovimentacao;
+    private LocalDate dataMovimentacao;
     private TipoTransacao tipoTransacao;
     private boolean planoExclusive;
 
@@ -39,7 +40,6 @@ public class HistoricoTransacao extends Transacao {
         }
 
         private HistoricoTransacaoBuilder transacao(Transacao transacao) {
-            historicoTransacao.setTipoTransacao(transacao.getTipoTransacao());
             historicoTransacao.setValor(transacao.getValor());
 
             return this;
@@ -52,7 +52,7 @@ public class HistoricoTransacao extends Transacao {
         }
 
         public HistoricoTransacao build(){
-            historicoTransacao.setDataHoraMovimentacao(LocalDateTime.now());
+            historicoTransacao.setDataMovimentacao(LocalDate.now());
 
             return historicoTransacao;
         }

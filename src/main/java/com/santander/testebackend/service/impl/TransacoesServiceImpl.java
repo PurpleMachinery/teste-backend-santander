@@ -10,6 +10,8 @@ import com.santander.testebackend.service.ITransacoesService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -57,8 +59,8 @@ public class TransacoesServiceImpl implements ITransacoesService {
     }
 
     @Override
-    public List<HistoricoTransacao> listarTransacoes() {
-        return historicoTransacaoRepository.findAll();
+    public List<HistoricoTransacao> listarTransacoes(LocalDate dataMovimentacao) {
+        return historicoTransacaoRepository.findAllByDataMovimentacao(dataMovimentacao);
     }
 
     private static BigDecimal calcularValorSubtraido(Transacao transacao, Cliente cliente) {
