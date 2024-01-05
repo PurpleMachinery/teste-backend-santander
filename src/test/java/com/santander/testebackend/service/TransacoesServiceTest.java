@@ -5,7 +5,7 @@ import com.santander.testebackend.model.HistoricoTransacao;
 import com.santander.testebackend.model.Transacao;
 import com.santander.testebackend.repository.ClienteRepository;
 import com.santander.testebackend.repository.HistoricoTransacaoRepository;
-import com.santander.testebackend.service.impl.ClienteServiceImpl;
+import com.santander.testebackend.repository.TaxaRepository;
 import com.santander.testebackend.service.impl.TransacoesServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,8 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -28,6 +26,7 @@ public class TransacoesServiceTest {
     private ClienteRepository clienteRepository;
 
     private HistoricoTransacaoRepository historicoTransacaoRepository;
+    private TaxaRepository taxaRepository;
 
     @Mock
     private ITransacoesService transacoesService;
@@ -35,8 +34,9 @@ public class TransacoesServiceTest {
     @Before
     public void init() {
         clienteRepository = mock(ClienteRepository.class);
+        taxaRepository = mock(TaxaRepository.class);
         historicoTransacaoRepository = mock(HistoricoTransacaoRepository.class);
-        transacoesService = new TransacoesServiceImpl(clienteRepository, historicoTransacaoRepository);
+        transacoesService = new TransacoesServiceImpl(clienteRepository, taxaRepository, historicoTransacaoRepository);
     }
 
     @Test
@@ -95,8 +95,6 @@ public class TransacoesServiceTest {
         mockTransacao.setNumeroConta("123456");
 
         when(clienteRepository.findClienteByNumeroConta(any())).thenReturn(Optional.of(mockCliente));
-
-        when(historicoTransacaoRepository.save(any())).thenReturn(new HistoricoTransacao());
 
         transacoesService.sacarValor(mockTransacao);
     }
