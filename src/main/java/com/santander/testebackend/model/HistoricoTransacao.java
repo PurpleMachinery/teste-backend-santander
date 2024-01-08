@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
 public class HistoricoTransacao extends Transacao {
 
     @Id

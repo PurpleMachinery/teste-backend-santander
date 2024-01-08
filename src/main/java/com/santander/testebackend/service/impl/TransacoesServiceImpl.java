@@ -73,10 +73,10 @@ public class TransacoesServiceImpl implements ITransacoesService {
     private BigDecimal calcularValorSubtraido(Transacao transacao, boolean clienteExclusive) {
         BigDecimal taxaAdministrativa = BigDecimal.ZERO;
 
-        List<Taxa> listaTaxas = taxaRepository.findAllByOrderByValorInicialDesc();
+        List<Taxa> listaTaxasDecrescente = taxaRepository.findAllByOrderByValorInicialDesc();
 
         if(!clienteExclusive) {
-            for (Taxa taxa : listaTaxas) {
+            for (Taxa taxa : listaTaxasDecrescente) {
                 if (transacao.getValor().compareTo(taxa.getValorInicial()) > 0) {
                     float porcentagemConcreta = 1 + taxa.getPorcentagem();
                     return transacao.getValor().multiply(BigDecimal.valueOf(porcentagemConcreta));
