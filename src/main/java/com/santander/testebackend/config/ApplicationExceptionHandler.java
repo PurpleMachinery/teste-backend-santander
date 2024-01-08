@@ -1,5 +1,6 @@
 package com.santander.testebackend.config;
 
+import com.santander.testebackend.config.exception.SaldoInvalidoException;
 import com.santander.testebackend.config.model.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.Ordered;
@@ -34,6 +35,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SaldoInvalidoException.class)
+    public ResponseEntity<?> handleSaldoInvalidoException(
+            final Exception exception, final HttpServletRequest request
+    ) {
+        var guid = UUID.randomUUID().toString();
+        var response = new ApiErrorResponse(
+                guid,
+                HttpStatus.UNPROCESSABLE_ENTITY.name(),
+                exception.getMessage(),
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                HttpStatus.UNPROCESSABLE_ENTITY.name(),
+                request.getRequestURI(),
+                request.getMethod(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)

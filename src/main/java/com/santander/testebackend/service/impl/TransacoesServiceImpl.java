@@ -1,5 +1,6 @@
 package com.santander.testebackend.service.impl;
 
+import com.santander.testebackend.config.exception.SaldoInvalidoException;
 import com.santander.testebackend.model.Cliente;
 import com.santander.testebackend.model.HistoricoTransacao;
 import com.santander.testebackend.model.Taxa;
@@ -55,7 +56,7 @@ public class TransacoesServiceImpl implements ITransacoesService {
             return clienteRepository.save(cliente);
         }
         else {
-            throw new Exception("Saldo insuficiente para transação, valor a ser recolhido R$" + valorSubtraido.toString());
+            throw new SaldoInvalidoException("Saldo insuficiente para transação, valor a ser recolhido R$" + valorSubtraido.toString());
         }
     }
 
